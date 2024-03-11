@@ -1,0 +1,171 @@
+[gd_scene load_steps=14 format=3 uid="uid://ctdqwctsy2myo"]
+
+[ext_resource type="PackedScene" uid="uid://bq1bcis3ccnna" path="res://Scenes/Claw.tscn" id="1_g0ssl"]
+[ext_resource type="Script" path="res://Scenes/Crab.gd" id="1_pqb4p"]
+[ext_resource type="Texture2D" uid="uid://d2yytphhjx8ww" path="res://Assets/BigCrabSpriteSheet.png" id="1_vjilf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wb3bu"]
+atlas = ExtResource("1_vjilf")
+region = Rect2(0, 0, 300, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2x5va"]
+atlas = ExtResource("1_vjilf")
+region = Rect2(0, 0, 300, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p71du"]
+atlas = ExtResource("1_vjilf")
+region = Rect2(300, 0, 300, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fu2n"]
+atlas = ExtResource("1_vjilf")
+region = Rect2(0, 200, 300, 200)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74c1t"]
+atlas = ExtResource("1_vjilf")
+region = Rect2(300, 200, 300, 200)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qfcii"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wb3bu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2x5va")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p71du")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6fu2n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_74c1t")
+}],
+"loop": true,
+"name": &"move",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hdk7f"]
+radius = 21.0
+height = 104.0
+
+[sub_resource type="Animation" id="Animation_nxjkv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LeftClaw:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-45, 10)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RightClaw:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(45, 10)]
+}
+
+[sub_resource type="Animation" id="Animation_5pjur"]
+resource_name = "move"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LeftClaw:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-45, 10), Vector2(-45, 12), Vector2(-45, 10), Vector2(-45, 12)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RightClaw:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(45, 10), Vector2(45, 12), Vector2(45, 10), Vector2(45, 12)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eqbn7"]
+_data = {
+"RESET": SubResource("Animation_nxjkv"),
+"move": SubResource("Animation_5pjur")
+}
+
+[node name="Crab" type="CharacterBody2D"]
+script = ExtResource("1_pqb4p")
+
+[node name="LeftClaw" parent="." instance=ExtResource("1_g0ssl")]
+position = Vector2(-45, 10)
+scale = Vector2(-1, 1)
+eat_input = "mouse_left"
+
+[node name="RightClaw" parent="." instance=ExtResource("1_g0ssl")]
+position = Vector2(45, 10)
+eat_input = "mouse_right"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_qfcii")
+animation = &"move"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 12)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_hdk7f")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_eqbn7")
+}
+autoplay = "move"
