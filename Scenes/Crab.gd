@@ -3,12 +3,18 @@ extends Node2D
 
 @onready var energy_bar := $EnergyBar
 @onready var energy_timer := $EnergyTimer
+signal no_energy
+
 var max_energy: int = 100
+var energy_loss: int = 5
+
 var energy: int = 0:
 	set(value):
 		energy = min(value, max_energy)
 		energy_bar.value = energy
-var energy_loss: int = 5
+		if energy < 0:
+			no_energy.emit()
+
 
 var speed := 150.0
 var x_min := 440.0

@@ -7,7 +7,6 @@ extends Node2D
 # TRACKED STATS
 # -------------
 var wave: int = 0
-var energy: int = 0
 var mutation: int = 0
 var score: int = 0
 
@@ -34,27 +33,31 @@ var stats: Dictionary = {
 	},
 }
 
+
+
+
+
+
 # -----------------
 # BABY CRAB SIGNALS
 # -----------------
-func on_baby_eaten(is_mutant, energy):
+
+func on_baby_eaten(_is_mutant, energy):
 	crab.energy += energy
 	
 func on_baby_escaped(is_mutant):
+	if is_mutant:
+		%MutationMeter.mutation += 1
+	
+func on_baby_killed(_is_mutant):
 	pass
 	
-func on_baby_killed(is_mutant):
-	pass
-	
-
-
-
-
-var SCORE := 0:
-	set(value):
-		SCORE = value
-		$Score.text = "Score: " + str(SCORE)
-
+# -----------
+# SETUP LEVEL
+# -----------
+func _ready():
+	$"Game Over".visible = false
+	$PausedLabel.visible = false	
 
 # ----------
 # PAUSE GAME
@@ -67,6 +70,13 @@ func _input(event):
 # ---------
 # GAME OVER
 # ---------
-func game_over():
+func _on_crab_no_energy():
+	game_over("You ran out of energy.")
+
+func _on_mutation_meter_mutation_ending():
+	game_over("You became a mutant crab. Eww.")
+
+func game_over(reason):
 	$"Game Over".visible = true
+	$"Game Over/ReasonLabel".text = reason
 	get_tree().paused = true

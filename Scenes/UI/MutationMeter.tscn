@@ -1,0 +1,93 @@
+[gd_scene load_steps=6 format=3 uid="uid://dtifsjoo7qglj"]
+
+[ext_resource type="Script" path="res://Scenes/UI/MutationMeter.gd" id="1_tslr5"]
+[ext_resource type="StyleBox" uid="uid://dayw6tcpfa4w6" path="res://Scenes/UI/MutationMeterBackground.tres" id="2_xqntv"]
+[ext_resource type="StyleBox" uid="uid://b0c3crk20m1go" path="res://Scenes/UI/MutationMeterBackgroundFull.tres" id="2_y5uey"]
+[ext_resource type="StyleBox" uid="uid://dd4mvb2x07cps" path="res://Scenes/UI/MutationMeterFillFull.tres" id="3_24brj"]
+[ext_resource type="StyleBox" uid="uid://d0e4mb652g2bn" path="res://Scenes/UI/MutationMeterFill.tres" id="3_fift0"]
+
+[node name="MutationMeter" type="Node2D"]
+script = ExtResource("1_tslr5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(320, 30)
+offset_top = 36.0
+offset_right = 320.0
+offset_bottom = 66.0
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer"]
+custom_minimum_size = Vector2(58, 30)
+layout_mode = 2
+theme_override_styles/background = ExtResource("2_y5uey")
+theme_override_styles/fill = ExtResource("3_24brj")
+max_value = 3.0
+step = 1.0
+value = 5.0
+allow_greater = true
+allow_lesser = true
+show_percentage = false
+
+[node name="ProgressBar2" type="ProgressBar" parent="HBoxContainer"]
+custom_minimum_size = Vector2(58, 30)
+layout_mode = 2
+theme_override_styles/background = ExtResource("2_xqntv")
+theme_override_styles/fill = ExtResource("3_fift0")
+min_value = 3.0
+max_value = 6.0
+step = 1.0
+value = 5.0
+allow_greater = true
+allow_lesser = true
+show_percentage = false
+
+[node name="ProgressBar3" type="ProgressBar" parent="HBoxContainer"]
+custom_minimum_size = Vector2(58, 30)
+layout_mode = 2
+theme_override_styles/background = ExtResource("2_xqntv")
+theme_override_styles/fill = ExtResource("3_fift0")
+min_value = 6.0
+max_value = 9.0
+step = 1.0
+value = 5.0
+allow_greater = true
+allow_lesser = true
+show_percentage = false
+
+[node name="ProgressBar4" type="ProgressBar" parent="HBoxContainer"]
+custom_minimum_size = Vector2(58, 30)
+layout_mode = 2
+theme_override_styles/background = ExtResource("2_xqntv")
+theme_override_styles/fill = ExtResource("3_fift0")
+min_value = 9.0
+max_value = 12.0
+step = 1.0
+value = 5.0
+allow_greater = true
+allow_lesser = true
+show_percentage = false
+
+[node name="ProgressBar5" type="ProgressBar" parent="HBoxContainer"]
+custom_minimum_size = Vector2(58, 30)
+layout_mode = 2
+theme_override_styles/background = ExtResource("2_xqntv")
+theme_override_styles/fill = ExtResource("3_fift0")
+min_value = 12.0
+max_value = 15.0
+step = 1.0
+value = 5.0
+allow_greater = true
+allow_lesser = true
+show_percentage = false
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(320, 36)
+offset_right = 320.0
+offset_bottom = 36.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 24
+text = "MUTATION METER"
+horizontal_alignment = 1
+vertical_alignment = 1
