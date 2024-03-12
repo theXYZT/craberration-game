@@ -6,8 +6,8 @@ var speed_multiplier := 1.0
 
 var is_mutant := false
 
-var base_energy := 10.0
-var energy_multiplier := 1.0
+var base_energy := 2
+var energy_multiplier := 1
 
 signal baby_eaten(is_mutant, energy)
 signal baby_killed(is_mutant)
