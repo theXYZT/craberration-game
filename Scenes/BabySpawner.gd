@@ -7,12 +7,20 @@ func _on_spawn_timer_timeout():
 	baby.position.x = randf_range(360.0, 920.0)
 	baby.position.y = -32.0
 	
+	baby.baby_eaten.connect(_on_baby_eaten)
+	baby.baby_escaped.connect(_on_baby_escaped)
+
 	if randf() < 0.1:
-		baby.IS_MUTANT = true
-	else:
-		baby.baby_eaten.connect(baby_eaten)
+		baby.is_mutant = true
 	
 	add_child(baby)
 
-func baby_eaten(energy):
-	pass
+func _on_baby_eaten(is_mutant, energy):
+	if is_mutant:
+		$"..".SCORE += 100
+	else:
+		$"..".SCORE += 10
+
+func _on_baby_escaped(is_mutant):
+	if is_mutant:
+		$"..".game_over()

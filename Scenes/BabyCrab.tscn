@@ -40,7 +40,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q6f1k"]
-radius = 4.0
+radius = 5.0
 height = 22.0
 
 [sub_resource type="Animation" id="Animation_0nqwv"]
@@ -148,6 +148,8 @@ libraries = {
 autoplay = "default"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(8.34465e-07, -0.5)
+scale = Vector2(0.933333, 0.85)
 rect = Rect2(-15, -10, 30, 20)
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

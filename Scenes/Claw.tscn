@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bq1bcis3ccnna"]
+[gd_scene load_steps=8 format=3 uid="uid://bq1bcis3ccnna"]
 
 [ext_resource type="Texture2D" uid="uid://f78dph7i045w" path="res://Assets/Claw.png" id="1_m4an5"]
 [ext_resource type="Script" path="res://Scenes/Claw.gd" id="1_qqjlk"]
+[ext_resource type="Script" path="res://Scenes/Hitbox.gd" id="3_34h7i"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1xmjm"]
-radius = 38.2099
-height = 121.644
+radius = 39.6413
+height = 132.965
 
 [sub_resource type="Animation" id="Animation_oji3h"]
 length = 0.001
@@ -37,7 +38,7 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_u6fny"]
 resource_name = "eat"
 length = 0.500008
-step = 0.0833333
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -45,10 +46,10 @@ tracks/0/path = NodePath("Sprite2D:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0833333, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.0166667, 0.0833333, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [0.0, -2.0944, 0.0]
+"values": [0.0, 0.174533, -2.0944, 0.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -57,7 +58,7 @@ tracks/1/path = NodePath("Sprite2D/Hitbox/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0833333),
+"times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -79,10 +80,13 @@ offset = Vector2(72, -52)
 
 [node name="Hitbox" type="Area2D" parent="Sprite2D"]
 collision_mask = 2
+script = ExtResource("3_34h7i")
+metadata/is_claw = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Hitbox"]
-position = Vector2(86, -58)
-rotation = 0.82205
+position = Vector2(88, -59)
+rotation = 0.785398
+scale = Vector2(1, 1)
 shape = SubResource("CapsuleShape2D_1xmjm")
 disabled = true
 

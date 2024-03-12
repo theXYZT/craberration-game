@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2l1eg3cu5w06"]
+[gd_scene load_steps=10 format=3 uid="uid://c2l1eg3cu5w06"]
 
 [ext_resource type="Script" path="res://Scenes/Beach.gd" id="1_iqkom"]
 [ext_resource type="Texture2D" uid="uid://oits2bjrm20r" path="res://Assets/sand.png" id="2_vy4vo"]
 [ext_resource type="PackedScene" uid="uid://ctdqwctsy2myo" path="res://Scenes/Crab.tscn" id="3_alax6"]
 [ext_resource type="Script" path="res://Scenes/BabySpawner.gd" id="4_sajsm"]
+[ext_resource type="PackedScene" uid="uid://44xpx7x5emxi" path="res://Scenes/UI/StatCounter.tscn" id="5_li0ll"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xh7my"]
 texture = ExtResource("2_vy4vo")
@@ -17,6 +18,27 @@ texture_region_size = Vector2i(64, 64)
 tile_size = Vector2i(64, 64)
 sources/0 = SubResource("TileSetAtlasSource_xh7my")
 
+[sub_resource type="GDScript" id="GDScript_k8jph"]
+resource_name = "game_over"
+script/source = "extends Control
+
+func _on_reset_game_pressed():
+	get_tree().paused = false
+	get_tree().change_scene_to_file(\"res://Main.tscn\")
+"
+
+[sub_resource type="GDScript" id="GDScript_3gw6k"]
+resource_name = "unpause_game"
+script/source = "extends Label
+
+
+func _input(event):
+	if event.is_action_pressed(\"ui_cancel\") and visible:
+		get_tree().paused = false
+		visible = false
+		get_viewport().set_input_as_handled()
+"
+
 [node name="Beach" type="Node2D"]
 script = ExtResource("1_iqkom")
 
@@ -29,12 +51,100 @@ layer_0/tile_data = PackedInt32Array(5, 0, 1, 65541, 65536, 0, 131077, 65536, 0,
 z_index = 1
 position = Vector2(640, 640)
 
-[node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 0.2
-autostart = true
-
 [node name="BabySpawner" type="Node2D" parent="."]
+unique_name_in_owner = true
 y_sort_enabled = true
 script = ExtResource("4_sajsm")
 
-[connection signal="timeout" from="SpawnTimer" to="BabySpawner" method="_on_spawn_timer_timeout"]
+[node name="SpawnTimer" type="Timer" parent="BabySpawner"]
+wait_time = 0.2
+autostart = true
+
+[node name="Score" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 304.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 32
+text = "Score: 0"
+
+[node name="Game Over" type="Control" parent="."]
+process_mode = 2
+visible = false
+layout_mode = 3
+anchors_preset = 0
+script = SubResource("GDScript_k8jph")
+
+[node name="Label" type="Label" parent="Game Over"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 480.0
+offset_top = 248.0
+offset_right = 792.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResetGame" type="Button" parent="Game Over"]
+layout_mode = 0
+offset_left = 496.0
+offset_top = 344.0
+offset_right = 776.0
+offset_bottom = 416.0
+theme_override_font_sizes/font_size = 24
+text = "Return to title screen"
+
+[node name="PausedLabel" type="Label" parent="."]
+process_mode = 2
+visible = false
+offset_top = 320.0
+offset_right = 1280.0
+offset_bottom = 400.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 48
+text = "GAME PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_3gw6k")
+
+[node name="ScoringLabels" type="Node2D" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScoringLabels"]
+offset_left = 960.0
+offset_top = 10.0
+offset_right = 1280.0
+offset_bottom = 674.0
+
+[node name="NormalEaten" parent="ScoringLabels/VBoxContainer" instance=ExtResource("5_li0ll")]
+layout_mode = 2
+
+[node name="NormalEscaped" parent="ScoringLabels/VBoxContainer" instance=ExtResource("5_li0ll")]
+layout_mode = 2
+stat_text = "Normal Baby Crabs Escaped:"
+
+[node name="Separator" type="Control" parent="ScoringLabels/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="MutantEaten" parent="ScoringLabels/VBoxContainer" instance=ExtResource("5_li0ll")]
+layout_mode = 2
+stat_text = "Mutant Baby Crabs Eaten:"
+
+[node name="MutantEscaped" parent="ScoringLabels/VBoxContainer" instance=ExtResource("5_li0ll")]
+layout_mode = 2
+stat_text = "Mutant Baby Crabs Escaped:"
+
+[connection signal="timeout" from="BabySpawner/SpawnTimer" to="BabySpawner" method="_on_spawn_timer_timeout"]
+[connection signal="pressed" from="Game Over/ResetGame" to="Game Over" method="_on_reset_game_pressed"]

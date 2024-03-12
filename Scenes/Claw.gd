@@ -1,10 +1,11 @@
+class_name Claw
 extends Node2D
 
 @export var eat_input : String 
 enum {IDLE, EAT}
 
 var current_state = null
-@onready var anim_player = $AnimationPlayer
+@onready var anim_player := $AnimationPlayer
 
 
 func _input(event):
