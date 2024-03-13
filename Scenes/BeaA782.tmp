@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c2l1eg3cu5w06"]
+[gd_scene load_steps=12 format=3 uid="uid://c2l1eg3cu5w06"]
 
 [ext_resource type="Script" path="res://Scenes/Beach.gd" id="1_iqkom"]
 [ext_resource type="Texture2D" uid="uid://c70mnaplvkp71" path="res://Assets/Level_Main.png" id="2_whfmo"]
@@ -6,12 +6,32 @@
 [ext_resource type="PackedScene" uid="uid://ctdqwctsy2myo" path="res://Scenes/Crab.tscn" id="3_alax6"]
 [ext_resource type="Texture2D" uid="uid://5jah6g7p67d3" path="res://Assets/Level_Water.png" id="4_0btmn"]
 [ext_resource type="Script" path="res://Scenes/BabySpawner.gd" id="4_sajsm"]
+[ext_resource type="PackedScene" uid="uid://44xpx7x5emxi" path="res://Scenes/UI/StatCounter.tscn" id="5_li0ll"]
 [ext_resource type="PackedScene" uid="uid://dtifsjoo7qglj" path="res://Scenes/UI/MutationMeter.tscn" id="6_vd2ps"]
-[ext_resource type="Script" path="res://Scenes/Pause.gd" id="7_bu70j"]
-[ext_resource type="Script" path="res://Scenes/GameOver.gd" id="7_o1far"]
+
+[sub_resource type="GDScript" id="GDScript_k8jph"]
+resource_name = "game_over"
+script/source = "extends Node2D
+
+func _on_reset_game_pressed():
+	get_tree().paused = false
+	get_tree().change_scene_to_file(\"res://Main.tscn\")
+"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8y7s"]
 bg_color = Color(0, 0, 0, 0.6)
+
+[sub_resource type="GDScript" id="GDScript_3gw6k"]
+resource_name = "unpause_game"
+script/source = "extends Label
+
+
+func _input(event):
+	if event.is_action_pressed(\"ui_cancel\") and visible:
+		get_tree().paused = false
+		visible = false
+		get_viewport().set_input_as_handled()
+"
 
 [node name="Beach" type="Node2D"]
 script = ExtResource("1_iqkom")
@@ -47,26 +67,26 @@ script = ExtResource("4_sajsm")
 wait_time = 0.2
 autostart = true
 
-[node name="GameOver" type="Node2D" parent="."]
-unique_name_in_owner = true
+[node name="Game Over" type="Node2D" parent="."]
 process_mode = 2
 visible = false
 z_index = 10
-script = ExtResource("7_o1far")
+script = SubResource("GDScript_k8jph")
 
-[node name="Background" type="Panel" parent="GameOver"]
+[node name="Background" type="Panel" parent="Game Over"]
 offset_right = 1280.0
 offset_bottom = 720.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_a8y7s")
 
-[node name="GameOverLabel" type="Label" parent="GameOver"]
+[node name="GameOverLabel" type="Label" parent="Game Over"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = 480.0
 offset_top = 200.0
-offset_right = 1280.0
+offset_right = 800.0
 offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -76,16 +96,16 @@ text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ReasonLabel" type="Label" parent="GameOver"]
-unique_name_in_owner = true
+[node name="ReasonLabel" type="Label" parent="Game Over"]
+offset_left = 480.0
 offset_top = 280.0
-offset_right = 1280.0
+offset_right = 800.0
 offset_bottom = 320.0
 text = "You became a mutant crab. Eww."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ResetGame" type="Button" parent="GameOver"]
+[node name="ResetGame" type="Button" parent="Game Over"]
 offset_left = 480.0
 offset_top = 400.0
 offset_right = 800.0
@@ -93,51 +113,58 @@ offset_bottom = 460.0
 theme_override_font_sizes/font_size = 24
 text = "Return to main menu"
 
-[node name="Pause" type="Node2D" parent="."]
-unique_name_in_owner = true
+[node name="PausedLabel" type="Label" parent="."]
 process_mode = 2
 visible = false
-z_index = 10
-script = ExtResource("7_bu70j")
-
-[node name="Background" type="Panel" parent="Pause"]
+offset_top = 320.0
 offset_right = 1280.0
-offset_bottom = 720.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_a8y7s")
-
-[node name="PausedLabel" type="Label" parent="Pause"]
-offset_top = 200.0
-offset_right = 1280.0
-offset_bottom = 300.0
+offset_bottom = 400.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
 theme_override_font_sizes/font_size = 48
 text = "GAME PAUSED"
 horizontal_alignment = 1
 vertical_alignment = 1
+script = SubResource("GDScript_3gw6k")
 
-[node name="ESCHintLabel" type="Label" parent="Pause"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_top = 280.0
+[node name="ScoringLabels" type="Node2D" parent="."]
+visible = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScoringLabels"]
+offset_left = 960.0
+offset_top = 10.0
 offset_right = 1280.0
-offset_bottom = 320.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-text = "Press ESC to unpause"
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_bottom = 674.0
 
-[node name="ResetGame" type="Button" parent="Pause"]
-offset_left = 480.0
-offset_top = 400.0
-offset_right = 800.0
-offset_bottom = 460.0
-theme_override_font_sizes/font_size = 24
-text = "Return to main menu"
+[node name="NormalEaten" parent="ScoringLabels/VBoxContainer" instance=ExtResource("5_li0ll")]
+layout_mode = 2
+
+[node name="NormalEscaped" parent="ScoringLabels/VBoxContainer" instance=ExtResource("5_li0ll")]
+layout_mode = 2
+stat_text = "Normal Baby Crabs Escaped:"
+
+[node name="Separator" type="Control" parent="ScoringLabels/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="MutantEaten" parent="ScoringLabels/VBoxContainer" instance=ExtResource("5_li0ll")]
+layout_mode = 2
+stat_text = "Mutant Baby Crabs Eaten:"
+
+[node name="MutantEscaped" parent="ScoringLabels/VBoxContainer" instance=ExtResource("5_li0ll")]
+layout_mode = 2
+stat_text = "Mutant Baby Crabs Escaped:"
+
+[node name="Score" type="Label" parent="."]
+visible = false
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 304.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 32
+text = "Score: 0"
 
 [node name="MutationMeter" parent="." instance=ExtResource("6_vd2ps")]
 unique_name_in_owner = true
@@ -146,7 +173,6 @@ position = Vector2(480, 10)
 
 [connection signal="no_energy" from="Crab" to="." method="_on_crab_no_energy"]
 [connection signal="timeout" from="BabySpawner/SpawnTimer" to="BabySpawner" method="_on_spawn_timer_timeout"]
-[connection signal="pressed" from="GameOver/ResetGame" to="GameOver" method="_on_reset_game_pressed"]
-[connection signal="pressed" from="Pause/ResetGame" to="Pause" method="_on_reset_game_pressed"]
+[connection signal="pressed" from="Game Over/ResetGame" to="Game Over" method="_on_reset_game_pressed"]
 [connection signal="mutate" from="MutationMeter" to="." method="_on_mutation_meter_mutate"]
 [connection signal="mutation_ending" from="MutationMeter" to="." method="_on_mutation_meter_mutation_ending"]

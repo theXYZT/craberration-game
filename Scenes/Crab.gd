@@ -17,8 +17,8 @@ var energy: int = 0:
 
 
 var speed := 150.0
-var x_min := 444.0
-var x_max := 836.0
+var x_min := 446.0
+var x_max := 834.0
 
 
 func _ready():
@@ -43,8 +43,8 @@ func _on_energy_timer_timeout():
 
 func big_left_claw():
 	($LeftClaw as Claw).scale = Vector2(1.5, -1.5)
-	x_min = 480.0
+	x_min = 482.0
 
 func big_right_claw():
 	($RightClaw as Claw).scale = Vector2(1.5, 1.5)
-	x_max = 800.0
+	x_max = 798.0

@@ -22,6 +22,10 @@ window/size/viewport_height=720
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 
+[editor]
+
+movie_writer/movie_file="C:/Users/nikhi/Godot Projects/Videos/crabberation.avi"
+
 [input]
 
 move_left={

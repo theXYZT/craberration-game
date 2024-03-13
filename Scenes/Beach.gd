@@ -38,6 +38,20 @@ var stats: Dictionary = {
 
 
 
+# -------------
+# MUTATION CODE
+# -------------
+func _on_mutation_meter_mutate(num):
+	print("Mutation #" + str(num))
+
+
+
+
+
+
+
+
+
 # -----------------
 # BABY CRAB SIGNALS
 # -----------------
@@ -56,15 +70,15 @@ func on_baby_killed(_is_mutant):
 # SETUP LEVEL
 # -----------
 func _ready():
-	$"Game Over".visible = false
-	$PausedLabel.visible = false	
+	%GameOver.visible = false
+	%Pause.visible = false
 
 # ----------
 # PAUSE GAME
 # ----------
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		$"PausedLabel".visible = true
+		%Pause.visible = true
 		get_tree().paused = true
 
 # ---------
@@ -77,6 +91,6 @@ func _on_mutation_meter_mutation_ending():
 	game_over("You became a mutant crab. Eww.")
 
 func game_over(reason):
-	$"Game Over".visible = true
-	$"Game Over/ReasonLabel".text = reason
+	%GameOver.visible = true
+	%ReasonLabel.text = reason
 	get_tree().paused = true
