@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var bars = $HBoxContainer.get_children()
 
-var segment: int = 3
+var segment: int = 4
 var max_mutation: int = segment * 5
 signal mutation_ending
 

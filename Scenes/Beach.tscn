@@ -1,8 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://c2l1eg3cu5w06"]
+[gd_scene load_steps=15 format=3 uid="uid://c2l1eg3cu5w06"]
 
 [ext_resource type="Script" path="res://Scenes/Beach.gd" id="1_iqkom"]
 [ext_resource type="Texture2D" uid="uid://oits2bjrm20r" path="res://Assets/sand.png" id="2_vy4vo"]
+[ext_resource type="Texture2D" uid="uid://c70mnaplvkp71" path="res://Assets/Level_Main.png" id="2_whfmo"]
+[ext_resource type="Texture2D" uid="uid://w5e3t5r2prlj" path="res://Assets/Level_Grass.png" id="3_2wvsa"]
 [ext_resource type="PackedScene" uid="uid://ctdqwctsy2myo" path="res://Scenes/Crab.tscn" id="3_alax6"]
+[ext_resource type="Texture2D" uid="uid://5jah6g7p67d3" path="res://Assets/Level_Water.png" id="4_0btmn"]
 [ext_resource type="Script" path="res://Scenes/BabySpawner.gd" id="4_sajsm"]
 [ext_resource type="PackedScene" uid="uid://44xpx7x5emxi" path="res://Scenes/UI/StatCounter.tscn" id="5_li0ll"]
 [ext_resource type="PackedScene" uid="uid://dtifsjoo7qglj" path="res://Scenes/UI/MutationMeter.tscn" id="6_vd2ps"]
@@ -46,18 +49,36 @@ func _input(event):
 [node name="Beach" type="Node2D"]
 script = ExtResource("1_iqkom")
 
+[node name="Level" type="Node2D" parent="."]
+
+[node name="MainLevelTexture" type="Sprite2D" parent="Level"]
+texture = ExtResource("2_whfmo")
+centered = false
+
+[node name="Grass" type="Sprite2D" parent="Level"]
+z_index = 4
+texture = ExtResource("3_2wvsa")
+centered = false
+
+[node name="WaterGradient" type="Sprite2D" parent="Level"]
+z_index = 3
+texture = ExtResource("4_0btmn")
+centered = false
+
 [node name="TileMap" type="TileMap" parent="."]
+visible = false
 tile_set = SubResource("TileSet_a1k0f")
 format = 2
 layer_0/tile_data = PackedInt32Array(5, 0, 1, 65541, 65536, 0, 131077, 65536, 0, 196613, 0, 0, 262149, 0, 1, 327685, 65536, 0, 393221, 65536, 0, 458757, 0, 0, 524293, 65536, 0, 589829, 0, 1, 655365, 65536, 0, 720901, 65536, 0, 6, 0, 0, 65542, 65536, 0, 131078, 0, 1, 196614, 65536, 0, 262150, 0, 1, 327686, 65536, 1, 393222, 0, 0, 458758, 0, 1, 524294, 0, 0, 589830, 0, 0, 655366, 65536, 0, 720902, 65536, 1, 7, 0, 1, 65543, 65536, 1, 131079, 65536, 1, 196615, 0, 1, 262151, 0, 0, 327687, 65536, 0, 393223, 0, 0, 458759, 0, 0, 524295, 65536, 1, 589831, 65536, 1, 655367, 0, 0, 720903, 65536, 0, 8, 65536, 1, 65544, 0, 1, 131080, 65536, 1, 196616, 65536, 0, 262152, 65536, 1, 327688, 0, 1, 393224, 65536, 1, 458760, 65536, 1, 524296, 65536, 1, 589832, 65536, 0, 655368, 0, 1, 720904, 65536, 1, 9, 65536, 0, 65545, 65536, 1, 131081, 0, 1, 196617, 0, 0, 262153, 0, 0, 327689, 0, 1, 393225, 65536, 0, 458761, 65536, 0, 524297, 65536, 0, 589833, 0, 1, 655369, 65536, 1, 720905, 65536, 0, 10, 0, 1, 65546, 65536, 0, 131082, 65536, 1, 196618, 65536, 1, 262154, 0, 0, 327690, 0, 0, 393226, 65536, 0, 458762, 65536, 0, 524298, 65536, 1, 589834, 0, 1, 655370, 65536, 0, 720906, 65536, 1, 11, 0, 1, 65547, 65536, 0, 131083, 65536, 1, 196619, 0, 0, 262155, 65536, 0, 327691, 0, 0, 393227, 65536, 1, 458763, 0, 1, 524299, 65536, 0, 589835, 0, 0, 655371, 65536, 1, 720907, 0, 1, 12, 65536, 0, 65548, 0, 1, 131084, 0, 1, 196620, 65536, 1, 262156, 0, 1, 327692, 65536, 1, 393228, 65536, 1, 458764, 0, 0, 524300, 65536, 1, 589836, 65536, 0, 655372, 65536, 0, 720908, 65536, 0, 13, 0, 0, 65549, 0, 0, 131085, 0, 1, 196621, 65536, 1, 262157, 65536, 0, 327693, 0, 0, 393229, 65536, 0, 458765, 65536, 0, 524301, 0, 0, 589837, 65536, 0, 655373, 0, 1, 720909, 65536, 0, 14, 0, 0, 65550, 65536, 1, 131086, 65536, 0, 196622, 65536, 1, 262158, 65536, 1, 327694, 0, 0, 393230, 0, 0, 458766, 65536, 1, 524302, 0, 1, 589838, 0, 0, 655374, 65536, 0, 720910, 65536, 0)
 
 [node name="Crab" parent="." instance=ExtResource("3_alax6")]
 unique_name_in_owner = true
-z_index = 1
+z_index = 6
 position = Vector2(640, 640)
 
 [node name="BabySpawner" type="Node2D" parent="."]
 unique_name_in_owner = true
+z_index = 1
 y_sort_enabled = true
 script = ExtResource("4_sajsm")
 
@@ -72,8 +93,7 @@ z_index = 10
 script = SubResource("GDScript_k8jph")
 
 [node name="Background" type="Panel" parent="Game Over"]
-offset_left = 320.0
-offset_right = 960.0
+offset_right = 1280.0
 offset_bottom = 720.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_a8y7s")
 
