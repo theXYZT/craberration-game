@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c2l1eg3cu5w06"]
+[gd_scene load_steps=15 format=3 uid="uid://c2l1eg3cu5w06"]
 
 [ext_resource type="Script" path="res://Scenes/Beach.gd" id="1_iqkom"]
 [ext_resource type="Texture2D" uid="uid://c70mnaplvkp71" path="res://Assets/Level_Main.png" id="2_whfmo"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://Scenes/GameOver.gd" id="7_o1far"]
 [ext_resource type="Script" path="res://Scenes/CardSelection.gd" id="10_ckg6a"]
 [ext_resource type="Script" path="res://Scenes/Debug.gd" id="11_knny3"]
+[ext_resource type="PackedScene" uid="uid://bxo28mja2gbvo" path="res://Scenes/UI/TutorialPanel.tscn" id="12_fb6u7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8y7s"]
 bg_color = Color(0, 0, 0, 0.6)
@@ -172,6 +173,37 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="MoveLabel" type="Label" parent="CardSelection"]
+visible = false
+offset_left = 400.0
+offset_top = 250.0
+offset_right = 880.0
+offset_bottom = 350.0
+text = "Special moves can only be used when the energy bar is green, and cost 25% of total energy."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="Wave Timer" type="Timer" parent="Timers"]
+wait_time = 30.0
+autostart = true
+
+[node name="Wave Label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 400.0
+offset_top = 300.0
+offset_right = 880.0
+offset_bottom = 500.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = -16
+theme_override_font_sizes/font_size = 42
+text = "The Baby Crabs
+are coming!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="CardsLabel" type="Label" parent="."]
 visible = false
 offset_left = 16.0
@@ -234,12 +266,16 @@ offset_bottom = 474.0
 focus_mode = 0
 text = "Slow"
 
+[node name="Tutorial Panel" parent="." instance=ExtResource("12_fb6u7")]
+position = Vector2(960, 0)
+
 [connection signal="no_energy" from="Crab" to="." method="_on_crab_no_energy"]
 [connection signal="timeout" from="BabySpawner/SpawnTimer" to="BabySpawner" method="_on_spawn_timer_timeout"]
 [connection signal="pressed" from="GameOver/ResetGame" to="GameOver" method="_on_reset_game_pressed"]
 [connection signal="pressed" from="Pause/ResetGame" to="Pause" method="_on_reset_game_pressed"]
 [connection signal="mutate" from="MutationMeter" to="." method="_on_mutation_meter_mutate"]
 [connection signal="mutation_ending" from="MutationMeter" to="." method="_on_mutation_meter_mutation_ending"]
+[connection signal="timeout" from="Timers/Wave Timer" to="BabySpawner" method="_on_wave_timer_timeout"]
 [connection signal="pressed" from="Debug/Button" to="Debug" method="_on_button_pressed"]
 [connection signal="pressed" from="Debug/Fast" to="Debug" method="_on_fast_pressed"]
 [connection signal="pressed" from="Debug/Normal" to="Debug" method="_on_normal_pressed"]

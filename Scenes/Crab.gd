@@ -118,6 +118,9 @@ func _input(event):
 			sand_move()
 
 func dash_move():
+	if Input.is_action_pressed("move_left") and Input.is_action_pressed("move_right"):
+		return
+	
 	if Input.is_action_pressed("move_left"):
 		dash_pos_x = x_min
 	elif Input.is_action_pressed("move_right"):

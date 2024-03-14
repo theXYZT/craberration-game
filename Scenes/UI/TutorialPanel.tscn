@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxo28mja2gbvo"]
+
+[ext_resource type="PackedScene" uid="uid://dnb5rxmohnx01" path="res://Scenes/BabyCrab.tscn" id="1_8roqm"]
+
+[node name="Tutorial Panel" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 304.0
+offset_bottom = 424.0
+text = "
+       Eat baby crabs for energy.
+If you run out of energy, you die!
+  
+       Stop the mutant babies!
+If they escape, the mutation bar
+goes up!
+
+You get mutations at the end
+of segments. But you lose if
+you mutate too much!
+
+
+Controls:
+
+A / D to move.
+
+Mouse Left/Right to eat
+baby crabs with your claws!
+
+SPACE to use special moves
+(when you get them).
+
+ESC to Pause when you
+need a break"
+clip_text = true
+
+[node name="BabyCrab" parent="." instance=ExtResource("1_8roqm")]
+position = Vector2(32, 56)
+
+[node name="BabyCrab2" parent="." instance=ExtResource("1_8roqm")]
+position = Vector2(33, 133)
+is_mutant = true

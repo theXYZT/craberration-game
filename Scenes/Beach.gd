@@ -2,12 +2,12 @@ class_name Beach
 extends Node2D
 
 @onready var crab := %Crab
+@onready var wave_label := %"Wave Label"
 
 # -------------
 # TRACKED STATS
 # -------------
 var wave: int = 0
-
 
 
 # -------------
@@ -35,6 +35,11 @@ func _ready():
 	%GameOver.visible = false
 	%Pause.visible = false
 	%CardSelection.visible = false
+	
+	wave_label.modulate = Color.TRANSPARENT
+	var tween := create_tween()
+	tween.tween_property(wave_label, "modulate", Color.WHITE, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_delay(1)
+	tween.tween_property(wave_label, "modulate", Color.TRANSPARENT, 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC).set_delay(4)
 
 # ----------
 # PAUSE GAME

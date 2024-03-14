@@ -25,17 +25,17 @@ var LEFT_CARD_DICT: Dictionary = {
 		"effect": func(): (%Crab as Crab).big_left_claw()
 	},
 	2: {
-		"title": "Dash!",
-		"desc": "You can now dash quickly to the other side.",
-		"bg_color": Color.from_hsv(0.6, 1.0, 0.4),
-		"fg_color": Color.from_hsv(0.50, 1.0, 1.0),
+		"title": "Special Move:\nCrab Dash",
+		"desc": "Press A/D + SPACE to dash quickly to the other side.",
+		"bg_color": Color(0.7333, 0.2941, 0),
+		"fg_color": Color(0.9176, 1, 0.337),
 		"effect": func(): (%Crab as Crab).get_dash_move()
 	},
 	3: {
 		"title": "Inefficient Digestion",
 		"desc": "Eating baby crabs now gives -50% energy.",
-		"bg_color": Color.from_hsv(0.6, 1.0, 0.4),
-		"fg_color": Color.from_hsv(0.50, 1.0, 1.0),
+		"bg_color": Color(0.2471, 0.0353, 0.6588),
+		"fg_color": Color(0.302, 1, 0.298),
 		"effect": func(): %BabySpawner.get_indigestion()
 	}
 }
@@ -56,10 +56,10 @@ var RIGHT_CARD_DICT: Dictionary = {
 		"effect": func(): (%Crab as Crab).big_right_claw()
 	},
 	2: {
-		"title": "Sand Quake",
-		"desc": "You can push back and slow down baby crabs near you.",
-		"bg_color": Color(0.549, 0, 0),
-		"fg_color": Color(1, 0.8431, 0.2275),
+		"title": "Special Move:\nSand Quake",
+		"desc": "Press SPACE to push back and slow down baby crabs near you.",
+		"bg_color": Color(0.3216, 0.3216, 0.3216),
+		"fg_color": Color(1, 0.3608, 0.9804),
 		"effect": func(): (%Crab as Crab).get_sand_move()
 	},
 	3: {
@@ -76,6 +76,10 @@ func _ready():
 
 func mutate():
 	mutation_num += 1
+	
+	if mutation_num == 2:
+		$MoveLabel.visible = true
+	
 	left_card = card_scene.instantiate()
 	left_card.card_clicked.connect(on_picked_left)
 	setup_card(left_card, left_card_position, LEFT_CARD_DICT[mutation_num])
@@ -106,5 +110,6 @@ func resolve_choice(picked: Card, discard: Card, effect: Callable):
 	$"../CardHolder".add_child(picked)
 	$"../CardsLabel".visible = true
 	effect.call()
+	$MoveLabel.visible = false
 	visible = false
 	get_tree().paused = false
