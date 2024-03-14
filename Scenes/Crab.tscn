@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://ctdqwctsy2myo"]
+[gd_scene load_steps=17 format=3 uid="uid://ctdqwctsy2myo"]
 
 [ext_resource type="PackedScene" uid="uid://bq1bcis3ccnna" path="res://Scenes/Claw.tscn" id="1_g0ssl"]
 [ext_resource type="Script" path="res://Scenes/Crab.gd" id="1_pqb4p"]
 [ext_resource type="Texture2D" uid="uid://d2yytphhjx8ww" path="res://Assets/BigCrabSpriteSheet.png" id="1_vjilf"]
+[ext_resource type="Script" path="res://Scenes/Hitbox.gd" id="4_ifj7u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wb3bu"]
 atlas = ExtResource("1_vjilf")
@@ -162,6 +163,9 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t0ujx"]
+size = Vector2(1000, 30)
+
 [node name="Crab" type="Node2D"]
 script = ExtResource("1_pqb4p")
 
@@ -204,7 +208,17 @@ show_percentage = false
 [node name="EnergyTimer" type="Timer" parent="."]
 
 [node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.6
 one_shot = true
+
+[node name="SandHitBox" type="Area2D" parent="."]
+script = ExtResource("4_ifj7u")
+eats = false
+
+[node name="Collider" type="CollisionShape2D" parent="SandHitBox"]
+position = Vector2(0, 40)
+shape = SubResource("RectangleShape2D_t0ujx")
+disabled = true
 
 [connection signal="timeout" from="EnergyTimer" to="." method="_on_energy_timer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

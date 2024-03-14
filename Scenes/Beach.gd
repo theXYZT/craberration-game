@@ -21,16 +21,13 @@ func _on_mutation_meter_mutate():
 # -----------------
 # BABY CRAB SIGNALS
 # -----------------
-func on_baby_eaten(_is_mutant, energy):
+func on_baby_eaten(energy):
 	crab.energy += energy
 	
 func on_baby_escaped(is_mutant):
 	if is_mutant:
 		%MutationMeter.mutation += 1
-	
-func on_baby_killed(_is_mutant):
-	pass
-	
+
 # -----------
 # SETUP LEVEL
 # -----------
@@ -55,6 +52,7 @@ func _on_crab_no_energy():
 
 func _on_mutation_meter_mutation_ending():
 	game_over("You became a mutant crab. Eww.")
+	%MutationMeter.z_index = 20
 
 func game_over(reason):
 	%GameOver.visible = true

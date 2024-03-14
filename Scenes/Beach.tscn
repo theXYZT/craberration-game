@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c2l1eg3cu5w06"]
+[gd_scene load_steps=14 format=3 uid="uid://c2l1eg3cu5w06"]
 
 [ext_resource type="Script" path="res://Scenes/Beach.gd" id="1_iqkom"]
 [ext_resource type="Texture2D" uid="uid://c70mnaplvkp71" path="res://Assets/Level_Main.png" id="2_whfmo"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Scenes/Pause.gd" id="7_bu70j"]
 [ext_resource type="Script" path="res://Scenes/GameOver.gd" id="7_o1far"]
 [ext_resource type="Script" path="res://Scenes/CardSelection.gd" id="10_ckg6a"]
+[ext_resource type="Script" path="res://Scenes/Debug.gd" id="11_knny3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8y7s"]
 bg_color = Color(0, 0, 0, 0.6)
@@ -190,12 +191,48 @@ theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 2
 
-[node name="Button" type="Button" parent="."]
+[node name="Debug" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("11_knny3")
+
+[node name="Button" type="Button" parent="Debug"]
+layout_mode = 0
 offset_left = 976.0
 offset_top = 96.0
 offset_right = 1248.0
 offset_bottom = 232.0
+focus_mode = 0
 text = "Mutate"
+
+[node name="Fast" type="Button" parent="Debug"]
+layout_mode = 0
+offset_left = 992.0
+offset_top = 280.0
+offset_right = 1192.0
+offset_bottom = 330.0
+focus_mode = 0
+text = "Fast"
+
+[node name="Normal" type="Button" parent="Debug"]
+layout_mode = 0
+offset_left = 992.0
+offset_top = 352.0
+offset_right = 1192.0
+offset_bottom = 402.0
+focus_mode = 0
+text = "Normal
+"
+
+[node name="Slow" type="Button" parent="Debug"]
+layout_mode = 0
+offset_left = 992.0
+offset_top = 424.0
+offset_right = 1192.0
+offset_bottom = 474.0
+focus_mode = 0
+text = "Slow"
 
 [connection signal="no_energy" from="Crab" to="." method="_on_crab_no_energy"]
 [connection signal="timeout" from="BabySpawner/SpawnTimer" to="BabySpawner" method="_on_spawn_timer_timeout"]
@@ -203,4 +240,7 @@ text = "Mutate"
 [connection signal="pressed" from="Pause/ResetGame" to="Pause" method="_on_reset_game_pressed"]
 [connection signal="mutate" from="MutationMeter" to="." method="_on_mutation_meter_mutate"]
 [connection signal="mutation_ending" from="MutationMeter" to="." method="_on_mutation_meter_mutation_ending"]
-[connection signal="pressed" from="Button" to="." method="_on_mutation_meter_mutate"]
+[connection signal="pressed" from="Debug/Button" to="Debug" method="_on_button_pressed"]
+[connection signal="pressed" from="Debug/Fast" to="Debug" method="_on_fast_pressed"]
+[connection signal="pressed" from="Debug/Normal" to="Debug" method="_on_normal_pressed"]
+[connection signal="pressed" from="Debug/Slow" to="Debug" method="_on_slow_pressed"]

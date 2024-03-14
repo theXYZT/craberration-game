@@ -15,28 +15,28 @@ var LEFT_CARD_DICT: Dictionary = {
 		"desc": "Move 20% faster, and energy usage is 30% higher.",
 		"bg_color": Color.from_hsv(0.6, 1.0, 0.4),
 		"fg_color": Color.from_hsv(0.50, 1.0, 1.0),
-		"effect": func(): (%Crab as Crab).become_athletic(),
+		"effect": func(): (%Crab as Crab).become_athletic()
 	},
 	1: {
 		"title": "South Claw",
 		"desc": "Left Claw is 50% bigger!",
 		"bg_color": Color.from_hsv(0.0, 0.0, 0.0),
 		"fg_color": Color.GOLD,
-		"effect": func(): (%Crab as Crab).big_left_claw(),
+		"effect": func(): (%Crab as Crab).big_left_claw()
 	},
 	2: {
-		"title": "Untitled Left Card",
-		"desc": "This option is great, pick this one!",
+		"title": "Dash!",
+		"desc": "You can now dash quickly to the other side.",
 		"bg_color": Color.from_hsv(0.6, 1.0, 0.4),
 		"fg_color": Color.from_hsv(0.50, 1.0, 1.0),
-		"effect": func(): (%Crab as Crab).big_left_claw(),
+		"effect": func(): (%Crab as Crab).get_dash_move()
 	},
 	3: {
-		"title": "Untitled Left Card",
-		"desc": "This option is great, pick this one!",
+		"title": "Inefficient Digestion",
+		"desc": "Eating baby crabs now gives -50% energy.",
 		"bg_color": Color.from_hsv(0.6, 1.0, 0.4),
 		"fg_color": Color.from_hsv(0.50, 1.0, 1.0),
-		"effect": func(): (%Crab as Crab).big_left_claw(),
+		"effect": func(): %BabySpawner.get_indigestion()
 	}
 }
 
@@ -56,18 +56,18 @@ var RIGHT_CARD_DICT: Dictionary = {
 		"effect": func(): (%Crab as Crab).big_right_claw()
 	},
 	2: {
-		"title": "Untitled Right Card",
-		"desc": "This option sucks and makes life hard.",
+		"title": "Sand Quake",
+		"desc": "You can push back and slow down baby crabs near you.",
 		"bg_color": Color(0.549, 0, 0),
 		"fg_color": Color(1, 0.8431, 0.2275),
-		"effect": func(): (%Crab as Crab).big_right_claw()
+		"effect": func(): (%Crab as Crab).get_sand_move()
 	},
 	3: {
-		"title": "Untitled Right Card",
-		"desc": "This option sucks and makes life hard.",
+		"title": "Aggressive Babies",
+		"desc": "Mutant babies now take energy to eat.",
 		"bg_color": Color(0.549, 0, 0),
 		"fg_color": Color(1, 0.8431, 0.2275),
-		"effect": func(): (%Crab as Crab).big_right_claw()
+		"effect": func(): %BabySpawner.get_angry_mutants()
 	}   
 }
 
