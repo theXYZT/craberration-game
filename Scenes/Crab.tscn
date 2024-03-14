@@ -57,7 +57,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/path = NodePath("CrabWhole/CrabBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -69,7 +69,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("LeftClaw:position")
+tracks/1/path = NodePath("CrabWhole/LeftClaw:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -81,7 +81,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("RightClaw:position")
+tracks/2/path = NodePath("CrabWhole/RightClaw:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -98,7 +98,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/path = NodePath("CrabWhole/CrabBody:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -110,7 +110,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("LeftClaw:position")
+tracks/1/path = NodePath("CrabWhole/LeftClaw:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -122,7 +122,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("RightClaw:position")
+tracks/2/path = NodePath("CrabWhole/RightClaw:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -165,17 +165,21 @@ corner_radius_bottom_left = 2
 [node name="Crab" type="Node2D"]
 script = ExtResource("1_pqb4p")
 
-[node name="LeftClaw" parent="." instance=ExtResource("1_g0ssl")]
+[node name="CrabWhole" type="Node2D" parent="."]
+
+[node name="LeftClaw" parent="CrabWhole" instance=ExtResource("1_g0ssl")]
+unique_name_in_owner = true
 position = Vector2(-45, 10)
 rotation = -3.14159
 scale = Vector2(1, -1)
 eat_input = "mouse_left"
 
-[node name="RightClaw" parent="." instance=ExtResource("1_g0ssl")]
+[node name="RightClaw" parent="CrabWhole" instance=ExtResource("1_g0ssl")]
+unique_name_in_owner = true
 position = Vector2(45, 10)
 eat_input = "mouse_right"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="CrabBody" type="AnimatedSprite2D" parent="CrabWhole"]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_qfcii")
 animation = &"move"
@@ -199,4 +203,8 @@ show_percentage = false
 
 [node name="EnergyTimer" type="Timer" parent="."]
 
+[node name="DeathTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="EnergyTimer" to="." method="_on_energy_timer_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

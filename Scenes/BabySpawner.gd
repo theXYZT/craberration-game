@@ -6,7 +6,7 @@ var baby_scene: PackedScene = load("res://Scenes/BabyCrab.tscn")
 func _on_spawn_timer_timeout():
 	var baby: BabyCrab = baby_scene.instantiate()
 	baby.position.x = randf_range(360.0, 920.0)
-	baby.position.y = -32.0
+	baby.position.y = 0.0
 	
 	baby.baby_eaten.connect(beach.on_baby_eaten)
 	baby.baby_escaped.connect(beach.on_baby_escaped)

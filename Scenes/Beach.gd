@@ -7,55 +7,20 @@ extends Node2D
 # TRACKED STATS
 # -------------
 var wave: int = 0
-var mutation: int = 0
-var score: int = 0
-
-var stats: Dictionary = {
-	"normal_baby_eaten": {
-		"name": "Normal Baby Crabs Eaten",
-		"count": 0,
-		"multiplier": 1,
-	},
-	"normal_baby_escaped": {
-		"name": "Normal Baby Crabs Escaped",
-		"count": 0,
-		"multiplier": 0,
-	},
-	"mutant_baby_eaten": {
-		"name": "Mutant Baby Crabs Eaten",
-		"count": 0,
-		"multiplier": 5,
-	},
-	"mutant_baby_escaped": {
-		"name": "Mutant Baby Crabs Escaped",
-		"count": 0,
-		"multiplier": 0,
-	},
-}
-
-
-
 
 
 
 # -------------
 # MUTATION CODE
 # -------------
-func _on_mutation_meter_mutate(num):
-	print("Mutation #" + str(num))
-
-
-
-
-
-
-
-
+func _on_mutation_meter_mutate():
+	%CardSelection.visible = true
+	get_tree().paused = true
+	%CardSelection.mutate()
 
 # -----------------
 # BABY CRAB SIGNALS
 # -----------------
-
 func on_baby_eaten(_is_mutant, energy):
 	crab.energy += energy
 	
@@ -72,6 +37,7 @@ func on_baby_killed(_is_mutant):
 func _ready():
 	%GameOver.visible = false
 	%Pause.visible = false
+	%CardSelection.visible = false
 
 # ----------
 # PAUSE GAME

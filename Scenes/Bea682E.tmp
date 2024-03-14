@@ -151,7 +151,6 @@ position = Vector2(480, 10)
 [node name="CardSelection" type="Node2D" parent="."]
 unique_name_in_owner = true
 process_mode = 2
-visible = false
 z_index = 10
 script = ExtResource("10_ckg6a")
 

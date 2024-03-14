@@ -5,7 +5,7 @@ extends Node2D
 var segment: int = 4
 var max_mutation: int = segment * 5
 signal mutation_ending
-signal mutate(num)
+signal mutate
 
 var bg1: StyleBoxFlat = preload("res://Scenes/UI/MutationMeterBackground.tres")
 var bg2: StyleBoxFlat = preload("res://Scenes/UI/MutationMeterBackgroundFull.tres")
@@ -25,7 +25,7 @@ var mutation: int = 0:
 				(bar as ProgressBar).add_theme_stylebox_override("fill", fg2)
 				
 				if mutation < max_mutation:
-					mutate.emit((mutation / segment) - 1)
+					mutate.emit()
 
 		if mutation == max_mutation:
 			mutation_ending.emit()
